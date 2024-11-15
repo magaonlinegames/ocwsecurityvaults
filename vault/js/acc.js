@@ -51,7 +51,7 @@ $("#lme-in-btn").click(
     var email = $("#email").val().toLowerCase().trim();
     var password = $("#pwd").val();
     if (email != '' && password != '') {
-      console.log('DOCUMENT FOUND: 7');
+      console.log('login data filled');
 
       firebase.firestore().collection("VAULTSECURITY").where("email_address", "==", email)
       .get()
@@ -182,7 +182,7 @@ function signIn(){
 
   if (email != '' && password != '') {
 
-    console.log('LOGIN:  777: '+ email);
+    console.log('LOGIN:  EMAIL: '+ email);
 
     var docRef = firebase.firestore().collection("VAULTSECURITY").doc(email);
 
