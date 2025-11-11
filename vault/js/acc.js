@@ -197,6 +197,14 @@ function signIn(){
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document! 22 "+email);
+            setTimeout(
+              function(){
+                if (account == '') {
+                  $("#lme-in-btn").show();
+                  
+                }
+              }, 4000
+            );
 
             firebase.firestore().collection("VAULTSECURITY").get().then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
@@ -208,6 +216,14 @@ function signIn(){
                     $("#lme-in-btn").show();
                     
                   }else{
+                    console.log('nothingg');
+                    $("#lme-in-btn").show();
+                    $("#error").show();
+                    setTimeout(
+                      function(){
+                        $("#error").hide();
+                      }, 3000
+                    );
 
                   }
                   //  checkvaultimg(doc.data().vaultimg);
