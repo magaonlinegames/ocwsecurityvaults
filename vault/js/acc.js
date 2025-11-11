@@ -176,6 +176,7 @@ function getMeLogins(account){
 }
 // let me sign in 
 function signIn(){
+  $("#lme-in-btn").hide();
   var email =  $("#email").val().toLowerCase().trim();
   var password = $("#pwd").val();
   var account;
@@ -190,25 +191,38 @@ function signIn(){
         if (doc.exists) {
             $(".login").hide();
 
-            console.log("Document data:", doc.data());
+            console.log("lgn dta:", doc.data());
             account = doc.data().account;
             getVaultDetails(account);
         } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!"+email);
+            console.log("No such document! 22 "+email);
 
             firebase.firestore().collection("VAULTSECURITY").get().then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
                   // doc.data() is never undefined for query doc snapshots
-                  console.log(doc.id, " VS=> ", doc.data());
-                   account = doc.data().account;
-                   checkvaultimg(doc.data().vaultimg);
-                   getVaultDetails(account);
+                  console.log(doc.id, " VS33=> ", doc.data());
+                  if (doc.data().amount == email) {
+                    account = doc.data().account;
+                    getVaultDetails(account);
+                    $("#lme-in-btn").show();
+                    
+                  }else{
+
+                  }
+                  //  checkvaultimg(doc.data().vaultimg);
               });
           });
         }
     }).catch((error) => {
         console.log("Error getting document:", error);
+        $("#error").show();
+        $("#lme-in-btn").show();
+        setTimeout(
+          function(){
+            $("#error").hide();
+          }, 3000
+        );
     });
 
     $('.security').removeClass('hide');
@@ -217,6 +231,8 @@ function signIn(){
   }else {
     // WARNING: error;
     $("#error").show();
+    $("#lme-in-btn").show();
+
     setTimeout(
       function(){
         $("#error").hide();
